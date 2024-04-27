@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h1 class="cover-heading">Classroom Management</h1>
+            <br>
+            <br>
+            <div id="classroom-list">
+                <h2>List of Available Classrooms</h2>
+                
+                <fieldset name="Classroom List">
+                    <!-- Display facilities in a select box if data is available -->
+                    <% if (typeof classrooms !== 'undefined' && classrooms.length > 0) { %>
+                        <label for="classroomSelect">Available Classrooms: </label>
+                        <select id="classroomSelect" name="classroomSelect" class="form-control">
+                            <% classrooms.forEach(function(classroom) { %>
+                                <option value="<%= classroom.id %>"><%= classroom.name %> | Capacity: <%= classroom.capacity %> </option>
+                            <% }); %>
+                        </select>
+                    <% } else { %>
+                        <p>No Classrooms available to display.</p>
+                    <% } %>
+                </fieldset>
+                
+                <br> <br> 
+                <div id="createClassroom">
+                    <h2> Create New Classroom </h2>
+                    <form action="/create_classroom" method="post">
+                        <div class="form-group">
+                            <label for="classroomName">Classroom Name:</label>
+                            <input type="text" id="classroomName" name="classroomName" required class="form-control">
+                            <br>
+                            <label for="classroomCapacity"> Classroom Capacity:</label>
+                            <input type="number" id="classroomCapacity" name="classroomCapacity" required class="form-control">
+                            <% if (typeof facilities !== 'undefined' && facilities.length > 0) { %>
+                                <br>
+                                <label for="facilityId">Choose a Facility:</label>
+                                <select id="facilityId" name="facilityId" class="form-control">
+                                    <% facilities.forEach(function(facility) { %>
+                                        <option value="<%= facility.id %>"><%= facility.name %></option>
+                                    <% }); %>
+                                </select>
+                            <% } else { %>
+                                <p>No facilities available to display.</p>
+                            <% } %>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Create Classroom</button>
+                        </div>
+                    </form>
+                    <br> <br>
+<div id="updateFacility">
+    <div>
+    <h2> Update a Classroom </h2>
+    <form action="/update_classroom" method="post">
+        <div class="form-group">
+            <label for="newClassroomName">Classroom Name:</label>
+                <input type="text" id="newClassroomName" name="newClassroomName" required class="form-control">
+                <br>
+                <label for="newCapacity"> Classroom Capacity:</label>
+                <input type="number" id="newCapacity" name="newCapacity" required class="form-control">
+                <br> 
+        <% if (typeof facilities !== 'undefined' && facilities.length > 0) { %>
+        <label for="facilityId">Select New Facility:</label>
+        <select name="facilityId" class="form-control" required>
+            <% facilities.forEach(function(facility) { %>
+                <option value="<%= facility.id %>"><%= facility.name %></option>
+            <% }); %>
+        </select>
+        <% } %>
+    <br>
+        <% if (typeof classrooms !== 'undefined' && classrooms.length > 0) { %>
+            <label for="classroomId">Select Classroom to Change: </label>
+            <select id="classroomId" name="classroomId" class="form-control">
+                <% classrooms.forEach(function(classroom) { %>
+                    <option value="<%= classroom.id %>"><%= classroom.name %> | Capacity: <%= classroom.capacity %> </option>
+                <% }); %>
+            </select>
+        <% } else { %>
+            <p>No Classrooms available to display.</p>
+        <% } %>
+        <br>
+        <button type="submit" class="btn btn-primary">Update Classroom</button>
+</div>
+</form>
+<br> <br>
+<div id="deleteClassroom">
+    <div>
+        <h2>Delete a Classroom</h2>
+        <form action="/delete_classroom" method="post">
+            <% if (typeof classrooms !== 'undefined' && classrooms.length > 0) { %>
+                <label for="classroomId">Select Classroom to Delete: </label>
+                <select id="classroomId" name="classroomId" class="form-control">
+                    <% classrooms.forEach(function(classroom) { %>
+                        <option value="<%= classroom.id %>"><%= classroom.name %> | Capacity: <%= classroom.capacity %> </option>
+                    <% }); %>
+                </select>
+            <% } else { %>
+                <p>No Classrooms available to display.</p>
+            <% } %>
+            <br>
+            <button type="submit" class="btn btn-primary">Delete Classroom</button>
+        </form>
+    </div>
+                    </div>
+                    </div>
+                    </div>
+</main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>

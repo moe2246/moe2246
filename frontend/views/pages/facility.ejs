@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+    <main>
+<div class="jumbotron">
+    <h1 class="cover-heading">Facilities Management</h1>
+    <br>
+    <br>
+    <div id="facility-list">
+        <h2>List of Available Facilities</h2>
+        <form action="/facility" method="get">
+        <fieldset name="Facilities List">
+            <!-- Display facilities in a select box if data is available -->
+            <% if (typeof facilities !== 'undefined' && facilities.length > 0) { %>
+                <label for="facilitySelect"></label>
+                <select id="facilitySelect" name="facilitySelect" class="form-control">
+                    <% facilities.forEach(function(facility) { %>
+                        <option value="<%= facility.id %>"><%= facility.name %></option>
+                    <% }); %>
+                </select>
+            <% } else { %>
+                <p>No facilities available to display.</p>
+            <% } %>
+        </fieldset>
+        </form>
+        <br> <br> 
+<div id="createFacility">
+<h2> Create New Facility </h2>
+<form action="/create_facility" method="post">
+    <div class="form-group">
+        <label for="facilityName">Facility Name:</label>
+        <input type="text" id="facilityName" name="facilityName" required class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Create Facility</button>
+</form>
+</div>
+<br> <br>
+<div id="updateFacility">
+    <div>
+    <h2> Update a Facility </h2>
+    <form action="/update_facility" method="post">
+        <% if (typeof facilities !== 'undefined' && facilities.length > 0) { %>
+        <label for="facilityId">Select Facility:</label>
+        <select name="facilityId" class="form-control" required>
+            <% facilities.forEach(function(facility) { %>
+                <option value="<%= facility.id %>"><%= facility.name %></option>
+            <% }); %>
+        </select>
+        <% } %>
+    <br>
+        <label for="newFacilityName">New Facility Name:</label>
+        <input type="text" name="newFacilityName" required class="form-control">
+    <br>
+        <button type="submit" class="btn btn-primary">Update Facility</button>
+    </form>
+</div>
+</div>
+<br> <br>
+<div id="deleteFacility">
+    <div>
+        <h2>Delete Faciility</h2>
+        <form action="/delete_facility" method="post">
+            <% if (typeof facilities !== 'undefined' && facilities.length > 0) { %>
+            <label for="facilityId">Select Facility to Delete:</label>
+            <select name="facilityId" required class="form-control">
+                <% facilities.forEach(function(facility) { %>
+                    <option value="<%= facility.id %>"><%= facility.name %></option>
+                <% }); %>
+            </select>
+            <% }; %>
+            <br>
+            <button type="submit" class="btn btn-primary">Delete Facility</button>
+        </form>
+    </div>
+</div>
+
+
+    </main>
+    
+         
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>

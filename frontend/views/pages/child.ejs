@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+<main>
+    <div class="jumbotron">
+        <h1 class="cover-heading">Child Management</h1>
+        <br>
+        <br>
+        <div id="child-list">
+            <h2>List of Children</h2>
+                <% if (typeof children !== 'undefined' && children.length > 0) { %>
+                    <label for="childId">Available Children:</label>
+                    <select id="childId" name="childId" class="form-control">
+                        <% children.forEach(function(child) { %>
+                            <option value="<%= child.id %>"> <%= child.firstname %> <%= child.lastname %> | Age: <%= child.age %> </option>
+                        <% }); %>
+                    </select>
+                <% } else { %>
+                    <p>No children available to display.</p>
+                <% } %>
+            <br> <br> 
+            <div id="createChild">
+                <h2> Create New Child </h2>
+                <form action="/create_child" method="post">
+                    <div class="form-group">
+                        <label for="childFirst">First Name:</label>
+                        <input type="text" id="childFirst" name="childFirst" required class="form-control">
+                        <br>
+                        <label for="childLast"> Last Name:</label>
+                        <input type="text" id="childLast" name="childLast" required class="form-control">
+                        <br>
+                        <label for="childAge"> Age:</label>
+                        <input type="number" id="childAge" name="childAge" required class="form-control">
+                        <br>
+                    <% if (typeof classrooms !== 'undefined' && classrooms.length > 0) { %>
+                <label for="classroomId">Select Classroom to Place Child: </label>
+                <select id="classroomId" name="classroomId" class="form-control">
+                <% classrooms.forEach(function(classroom) { %>
+                    <option value="<%= classroom.id %>">Class Name: <%= classroom.name %> | Capacity: <%= classroom.capacity %> </option>
+                <% }); %>
+            </select>
+            <% } else { %>
+            <p>No Classrooms available to display.</p>
+            <% } %>
+            <br>
+                        <button type="submit" class="btn btn-primary">Create Child</button>
+                    </div>
+                </form>
+                <br> <br>
+                <div id="updateChild">
+                    <div>
+                    <h2> Update a Child </h2>
+                    <form action="/update_child" method="post">
+                        <div class="form-group">
+                            <label for="newChildFirst">First Name:</label>
+                                <input type="text" id="newChildFirst" name="newChildFirst" required class="form-control">
+                                <br>
+                                <label for="newChildLast"> Last Name:</label>
+                                <input type="text" id="newChildLast" name="newChildLast" required class="form-control">
+                                <br> 
+                                <label for="newChildAge"> Age:</label>
+                                <input type="number" id="newChildAge" name="newChildAge" required class="form-control">
+                                <br>
+                                <% if (typeof children !== 'undefined' && children.length > 0) { %>
+                                    <label for="childId">Child to Change: </label>
+                                    <select id="childId" name="childId" class="form-control">
+                                        <% children.forEach(function(child) { %>
+                                            <option value="<%= child.id %>"> <%= child.firstname %> <%= child.lastname %> | Age: <%= child.age %></option>
+                                        <% }); %>
+                                    </select>
+                                <% } else { %>
+                                    <p>No children available to display.</p>
+                                <% } %>
+                                <br>
+                        <% if (typeof classrooms !== 'undefined' && classrooms.length > 0) { %>
+                            <label for="classroomId">Select Classroom to Change: </label>
+                            <select id="classroomId" name="classroomId" class="form-control">
+                                <% classrooms.forEach(function(classroom) { %>
+                                    <option value="<%= classroom.id %>"><%= classroom.name %></option>
+                                <% }); %>
+                            </select>
+                        <% } else { %>
+                            <p>No Classrooms available to display.</p>
+                        <% } %>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Update Child</button>
+                </div>
+                </form>
+                <br> <br>
+                <form action="/delete_child" method="post">
+                <div id="child-delete">
+                    <h2>Delete Children</h2>
+                        <% if (typeof children !== 'undefined' && children.length > 0) { %>
+                            <label for="childId">Available Children:</label>
+                            <select id="childId" name="childId" class="form-control">
+                                <% children.forEach(function(child) { %>
+                                    <option value="<%= child.id %>"> <%= child.firstname %> <%= child.lastname %> | Age: <%= child.age %> </option>
+                                <% }); %>
+                            </select>
+                        <% } else { %>
+                            <p>No children available to display.</p>
+                        <% } %>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Delete Child</button>
+                    </form>
+        </div>
+    </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>

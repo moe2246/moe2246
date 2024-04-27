@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+<main>
+    <div class="jumbotron">
+        <h1 class="cover-heading">Teacher Management</h1>
+        <br>
+        <br>
+        <div id="teacher-list">
+            <h2>List of Teachers</h2>
+                <% if (typeof teachers !== 'undefined' && teachers.length > 0) { %>
+                    <label for="facilitySelect">Available Teachers:</label>
+                    <select id="facilitySelect" name="facilitySelect" class="form-control">
+                        <% teachers.forEach(function(teacher) { %>
+                            <option value="<%= teacher.id %>"><%= teacher.firstname %> <%= teacher.lastname %></option>
+                        <% }); %>
+                    </select>
+                <% } else { %>
+                    <p>No teachers available to display.</p>
+                <% } %>
+            <br> <br> 
+            <div id="createClassroom">
+                <h2> Create New Teacher </h2>
+                <form action="/create_teacher" method="post">
+                    <div class="form-group">
+                        <label for="teacherFirst">First Name:</label>
+                        <input type="text" id="teacherFirst" name="teacherFirst" required class="form-control">
+                        <br>
+                        <label for="teacherLast"> Last Name:</label>
+                        <input type="text" id="teacherLast" name="teacherLast" required class="form-control">
+                        <br>
+                    <% if (typeof classrooms !== 'undefined' && classrooms.length > 0) { %>
+                <label for="classroomId">Select Classroom to Place Teacher: </label>
+                <select id="classroomId" name="classroomId" class="form-control">
+                <% classrooms.forEach(function(classroom) { %>
+                    <option value="<%= classroom.id %>"><%= classroom.name %> | Capacity: <%= classroom.capacity %></option>
+                <% }); %>
+            </select>
+            <% } else { %>
+            <p>No Classrooms available to display.</p>
+            <% } %>
+            <br>
+                        <button type="submit" class="btn btn-primary">Create Teacher</button>
+                    </div>
+                </form>
+                <br> <br>
+                <div id="updateTeacher">
+                    <div>
+                    <h2> Update a Teacher </h2>
+                    <form action="/update_teacher" method="post">
+                        <div class="form-group">
+                            <label for="newTeacherFirst">First Name:</label>
+                                <input type="text" id="newTeacherFirst" name="newTeacherFirst" required class="form-control">
+                                <br>
+                                <label for="newTeacherLast"> Last Name:</label>
+                                <input type="text" id="newTeacherLast" name="newTeacherLast" required class="form-control">
+                                <br> 
+                                <% if (typeof teachers !== 'undefined' && teachers.length > 0) { %>
+                                    <label for="teacherId">Teacher to Change: </label>
+                                    <select id="teacherId" name="teacherId" class="form-control">
+                                        <% teachers.forEach(function(teacher) { %>
+                                            <option value="<%= teacher.id %>"><%= teacher.firstname %> <%= teacher.lastname %></option>
+                                        <% }); %>
+                                    </select>
+                                <% } else { %>
+                                    <p>No teachers available to display.</p>
+                                <% } %>
+                    <br>
+                        <% if (typeof classrooms !== 'undefined' && classrooms.length > 0) { %>
+                            <label for="classroomId">Select Classroom to Change: </label>
+                            <select id="classroomId" name="classroomId" class="form-control">
+                                <% classrooms.forEach(function(classroom) { %>
+                                    <option value="<%= classroom.id %>"><%= classroom.name %> | Capacity: <%= classroom.capacity %></option>
+                                <% }); %>
+                            </select>
+                        <% } else { %>
+                            <p>No classrooms available to display.</p>
+                        <% } %>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Update Teacher</button>
+                </div>
+                </form>
+                <br> <br>
+                <div id="deleteTeacher">
+                    <div>
+                        <h2>Delete a Teacher</h2>
+                        <form action="/delete_teacher" method="post">
+                            <% if (typeof teachers !== 'undefined' && teachers.length > 0) { %>
+                                <label for="teacherId">Select Classroom to Delete: </label>
+                                <select id="teacherId" name="teacherId" class="form-control">
+                                    <% teachers.forEach(function(teacher) { %>
+                                        <option value="<%= teacher.id %>"><%= teacher.firstname %> <%= teacher.lastname %></option>
+                                    <% }); %>
+                                </select>
+                            <% } else { %>
+                                <p>No teachers available to display.</p>
+                            <% } %>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Delete Teacher</button>
+                        </form>
+                    </div>
+        </div>
+    </main>
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>
